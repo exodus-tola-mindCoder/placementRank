@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5001;
 
 // create a route
 
-import authRoutes from './routes/authRoute.js';
+import authRoutes from './routes/auth.route.js';
 
 
 app.use(express.json());
