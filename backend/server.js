@@ -1,9 +1,11 @@
 import express from 'express';
-
 import dotenv from 'dotenv';
-dotenv.config();
-
 import connectDB from './config/db.js';
+
+dotenv.config();
+console.log(`MONGO_URI: ${process.env.MONGO_URI}`);
+connectDB();
+
 
 const app = express();
 
@@ -15,11 +17,9 @@ import authRoutes from './routes/auth.route.js';
 
 
 app.use(express.json());
-
 app.use("/api/auth", authRoutes);
 
 
 app.listen(PORT, () => {
-    connectDB();
     console.log(`server is running on port ${PORT}`);
 });
