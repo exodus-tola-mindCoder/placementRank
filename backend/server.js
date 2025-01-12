@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 
 dotenv.config();
-console.log(`MONGO_URI: ${process.env.MONGO_URI}`);
+// console.log(`MONGO_URI: ${process.env.MONGO_URI}`);
 connectDB();
 
 
