@@ -18,6 +18,7 @@ import authRoutes from './routes/auth.route.js';
 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/department", departmentRoutes);
 
 
 app.listen(PORT, () => {
