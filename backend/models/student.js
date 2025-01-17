@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const studentSchema = new mongoose.Schema({
+    studentId: {
+        type: String,
+        required: true,
+        unique: true
+    },
     fullName: {
         type: String,
         required: true
@@ -10,13 +15,11 @@ const studentSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    username: {
-        type: String,
-        required: true,
-        unique: true
-        
-    },
     password: {
+        type: String,
+        required: true
+    },
+    department: {
         type: String,
         required: true
     },
@@ -26,9 +29,9 @@ const studentSchema = new mongoose.Schema({
         min: 0,
         max: 100
     },
-    department: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Department'
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 

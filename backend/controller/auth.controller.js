@@ -1,8 +1,8 @@
-import User from '../models/user.model.js';
+import User from '../models/student.js';
 
 import bcrypt from 'bcryptjs';
 
-export const signupController = async (req, res) => {
+export const registerController = async (req, res) => {
 
     try {
         const { fullName, email, average, password, username } = req.body;
