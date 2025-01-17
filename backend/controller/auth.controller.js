@@ -1,12 +1,12 @@
-import User from '../models/student.js';
+import Student from '../models/student.js';
 
 import bcrypt from 'bcryptjs';
 
 export const registerController = async (req, res) => {
 
     try {
-        const { fullName, email, average, password, username } = req.body;
-        if (fullName === "" || email === "" || average === "" || password === "") {
+        const { fullName, email, average, password, department, averageScore } = req.body;
+        if (fullName === "" || email === "" ||password === "" || department === "" || averageScore === "") {
             return res.status(400).json({ msg: "Please fill in all fields" });
         };
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -24,23 +24,17 @@ export const registerController = async (req, res) => {
             return res.status(400).json({ msg: "User email already exists" });
         };
 
-        const userExistByUsername = await User.findOne({
-            username: username
-        });
-        if (userExistByUsername) {
-            return res.status(400).json({ msg: "Username already exists" });
-        };
-
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const newUser = new User({
+        const student = new Student({
             fullName,
             email,
             average,
             password: hashedPassword,
-            username
+            department,
+            averageScore
         });
-        if (newUser) {
+        if (student) {
             await newUser.save();
             res.status(201).json({
                 success: true, User: {
@@ -50,6 +44,9 @@ export const registerController = async (req, res) => {
             });
         };
 
+        const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET, { expiresIn: 3600 });
+        res.status(201).send({student, token});
+    
         res.status(200).json({ msg: "User created successfully" });
 
 
