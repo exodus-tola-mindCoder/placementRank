@@ -23,7 +23,7 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    average: {
+    averageScore: {
         type: Number,
         required: true,
         min: 0,
