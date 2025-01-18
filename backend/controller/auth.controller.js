@@ -53,8 +53,11 @@ export const loginController = async (req, res) => {
 
         res.status(200).json({ msg: "User logged in successfully" });
 
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'your-secret-key');
+        res.status(200).send({ user, token });
+
     } catch (error) {
         console.log("Error", error.message);
-        res.status(500).json({ msg: "Server Error" });
+        res.status(400).json({ msg: "Server Error" });
     };
 };
