@@ -9,7 +9,7 @@ const authMiddleware = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
         const student = await Student.findOne({ _id: decoded.id });
         if (!student) throw new Error();
-        req.student = decoded
+        req.student = student;
         next();
     } catch (error) {
         res.status(401).send({ error: 'Please authenticate.' });
