@@ -31,11 +31,11 @@ export const getDepartmentStats = async (req, res) => {
 
         // First, we get the total number of students in the same department:
 
-        const totalInDepartment = await student.countDocuments({ department });
+        const totalInDepartment = await Student.countDocuments({ department });
 
         // Next, we count how many students have higher scores than the current student in their department:
 
-        const higherScores = await student.countDocuments({
+        const higherScores = await Student.countDocuments({
             department, averageScore: { $gt: student.averageScore }
         });
 
@@ -66,10 +66,9 @@ export const getDepartmentStats = async (req, res) => {
 
         // Get the number of students in the department
         const departmentCapacity = departmentCapacities[department];
-
         // probablity of admission
 
-        const probablity = rank <= departmentCapacity ? "High" : rank <= departmentCapacity * 1.2 ? "Medium" : "Low";
+        const probablity = rank <= departmentCapacity ? "High" : rank <= departmentCapacity * 2 ? "Medium" : "Low";
 
         res.send({
             department,
@@ -82,6 +81,5 @@ export const getDepartmentStats = async (req, res) => {
     
     } catch (error) {
         res.status(500).send({ message: error.message });
-
     }
 }
