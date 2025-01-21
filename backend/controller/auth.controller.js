@@ -36,26 +36,30 @@ export const loginController = async (req, res) => {
 
     try {
         const { studentId, email, password } = req.body;
-        const user = await Student.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ msg: "User does not exist" });
+        const student = await Student.findOne({ email });
+        if (!student) {
+            throw new Error('Invalid Login credentials')
         };
-        const idMatch = studentId === user.studentId;
-        if (!idMatch) {
-            return res.status(400).json({ msg: "Invalid credentials" });
+        const IdMatch = student.studentId === studentId;
+        if (!IdMatch) {
+            throw new Error('Invalid studentId credentials');
         };
 
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, student.password);
         if (!isMatch) {
-            return res.status(400).json({ msg: "Invalid credentials" });
+            throw new Error('Invalid password credentials');
         };
 
-        res.status(200).json({ msg: "User logged in successfully" });
-
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'your-secret-key');
-        res.status(200).send({ user, token });
-
+        
+        const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET || 'your-secret-key');
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            sameSite: 'none'
+        });
+        
+        res.status(200).json({ msg: "student logged in successfully" });
     } catch (error) {
         console.log("Error", error.message);
         res.status(400).json({ msg: "Server Error" });
