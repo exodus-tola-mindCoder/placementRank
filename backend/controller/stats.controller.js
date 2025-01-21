@@ -1,6 +1,6 @@
 import Student from "../models/student.js";
 
-export const getStatsController = async (req, res) => {
+export const getStats = async (req, res) => {
     try {
         const student = req.student
 
@@ -9,13 +9,13 @@ export const getStatsController = async (req, res) => {
 
         // Next, we count how many students have higher scores than the current student in their department:
         const higherScores = await Student.countDocuments({
-            department: student.department, score: { $gt: student.averageScore }
+            department: student.department, averageScore: { $gt: student.averageScore }
         });
 
         // Finally, we calculate the rank by adding 1 to the number of students with higher scores:
         const rank = higherScores + 1;
 
-        res.status(200).json({ rank, totalInDepartment });
+        res.status(200).json({ totalInDepartment, higherScores, rank });
         
     } catch (error) {
         console.log(error);

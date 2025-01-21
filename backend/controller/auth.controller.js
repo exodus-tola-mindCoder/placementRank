@@ -56,10 +56,11 @@ export const loginController = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'none'
+            sameSite: 'strict'
         });
         
         res.status(200).json({ msg: "student logged in successfully" });
+
     } catch (error) {
         console.log("Error", error.message);
         res.status(400).json({ msg: "Server Error" });

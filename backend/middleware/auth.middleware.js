@@ -1,18 +1,18 @@
 import jwt from 'jsonwebtoken';
+import Student from '../models/student.js';
 
-const authMiddleware = (req, res, next) => {
-    const token = req.cookies.token;
-
-    if (!token) {
-        return res.status(401).json({ msg: 'No token, authorization denied' });
-    }
-
+const authMiddleware = async (req, res, next) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        const token = req.cookies.token;
+        if (!token) throw new Error();
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        const student = await Student.findOne({ _id: decoded.id });
+        if (!student) throw new Error();
+        req.student = decoded
         next();
     } catch (error) {
-        res.status(401).json({ msg: 'Token is not valid' });
+        res.status(401).send({ error: 'Please authenticate.' });
     }
 };
 

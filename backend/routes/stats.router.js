@@ -1,7 +1,12 @@
-import router from 'express';
+import express from 'express';
 
 const router = express.Router();
 
-router.post('/rank', getStatsController);
+import { getStats } from '../controller/stats.controller.js';
+
+import authMiddleware from '../middleware/auth.middleware.js';
+
+
+router.get('/stats', authMiddleware  ,getStats);
 
 export default router;

@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
 
 import authRoutes from './routes/auth.route.js';
+import statsRoutes from './routes/stats.router.js';
 
 
 dotenv.config();
@@ -26,7 +27,7 @@ app.use(express.json());
 
 
 app.use("/api/auth", authRoutes);
-// app.use("/api/stats", statsRoutes);
+app.use("/api", statsRoutes);
 
 const PORT = process.env.PORT || 5001;
 
