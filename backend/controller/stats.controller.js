@@ -78,8 +78,27 @@ export const getDepartmentStats = async (req, res) => {
             departmentCapacity,
             probablity
         });
-    
+
     } catch (error) {
         res.status(500).send({ message: error.message });
+    }
+};
+
+
+export const updateDepartment = async (req, res) => {
+    try {
+        const student = req.student;
+        const { department } = req.body;
+
+        if (!department) {
+            return res.status(400).send({ message: "Department is required" });
+        };
+
+        student.department = department;
+        await student.save();
+        res.send({ message: "Department updated successfully" });
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+
     }
 }
