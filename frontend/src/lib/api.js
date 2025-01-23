@@ -24,6 +24,8 @@ export const register = async (studentData) => {
   return response.data;
 };
 
+
+
 export const login = async (studentId, email, password) => {
   const response = await api.post('/auth/login', { studentId, email, password });
   return response.data;
@@ -44,6 +46,26 @@ export const updateDepartment = async (department, data) => {
   const response = await api.put('/update-department', { department, data });
   return response.data;
 };
+
+export const departments = [
+  'Software Engineering',
+  'Computer Science',
+  'Information Technology',
+  'Information Systems',
+  'Electrical Engineering',
+  'Mechanical Engineering',
+  'Civil Engineering',
+  'Chemical Engineering',
+  'Medicine',
+  'pharmacy',
+  'Nursing',
+  'Information Science',
+  'Doctor of Veternary Medicine',
+  'Medical Laboratory Science',
+  'Public Health',
+  'midwifery',
+  'law'
+];
 
 
 
