@@ -1,9 +1,15 @@
 import React from 'react'
 import StatCard from './StatCard'
+import DepartmentComparison from './DepartmentComparison'
 import { School, Trophy, Users } from 'lucide-react'
+
+
+
 function Dashboard({ stats }) {
   const [departmentStats, setDepartmentStats] = useState([]);
   const [loading, setLoading] = useState(false);
+
+
   
 
 
