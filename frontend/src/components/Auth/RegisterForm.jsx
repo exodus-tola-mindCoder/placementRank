@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-
-
+import { register, departments } from '../../lib/api';
+import { toast } from 'react-hot-toast';
 import { UserPlus } from 'lucide-react'
 
-function RegisterForm({ onToggleAuth }) {
+function RegisterForm({ onToggleAuth, onRegisterSuccess }) {
 
-    const [FormData, setFormData] = useState({
+    const [formData, setFormData] = useState({
         email: '',
         password: '',
         studentId: '',
@@ -15,16 +15,23 @@ function RegisterForm({ onToggleAuth }) {
     });
 
     const handleChange = (e) => {
-        // logic here
-    }
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
-        // logic here
-    }
-
-
-
-
+        e.preventDefault();
+        try {
+            const { student, token } = await register({ ...formData, averageScore: parseFloat(formData.averageScore) });
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(student));
+            onRegisterSuccess(student);
+            toast.success('successfully registere!');
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Registration failed!');
+            
+        }
+    };
 
     return (
         <div className='max-w-md mx-auto bg-white round-lg shadow-md p-6'>
@@ -43,7 +50,7 @@ function RegisterForm({ onToggleAuth }) {
                         text='text'
                         name='studentId'
                         placeholder='Enter your student ID'
-                        required value={FormData.studentId} onChange={handleChange}
+                        required value={formData.studentId} onChange={handleChange}
                         className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
                     />
                 </div>
@@ -53,7 +60,7 @@ function RegisterForm({ onToggleAuth }) {
                         text='text'
                         name='fullName'
                         placeholder='Enter your full name'
-                        required value={FormData.fullName} onChange={handleChange}
+                        required value={formData.fullName} onChange={handleChange}
                         className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
                     />
                 </div>
@@ -63,7 +70,7 @@ function RegisterForm({ onToggleAuth }) {
                         text='text'
                         name='email'
                         placeholder='Enter your email'
-                        required value={FormData.email} onChange={handleChange}
+                        required value={formData.email} onChange={handleChange}
                         className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
                     />
                 </div>
@@ -73,17 +80,17 @@ function RegisterForm({ onToggleAuth }) {
                         text='password'
                         name='password'
                         placeholder='Enter your password'
-                        required value={FormData.password} onChange={handleChange}
+                        required value={formData.password} onChange={handleChange}
                         className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
                     />
                 </div>
                 <div>
                     <label className='block text-base text-gray-700 font-medium'>Department</label>
-                    <select name='department' placeholder='Select your department' required value={FormData.department} onChange={handleChange} className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'>
+                    <select name='department' placeholder='Select your department' required value={formData.department} onChange={handleChange} className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'>
                         <option value="">Select Department</option>
-                        <option value="CSE">CSE</option>
-                        <option value="EEE">EEE</option>
-                        <option value="BBA">BBA</option>
+                        {departments.map((dept) => (
+                            <option key={dept} value={dept}>{dept}</option>
+                        ))}
                     </select>
                 </div>
                 <div>
@@ -95,7 +102,7 @@ function RegisterForm({ onToggleAuth }) {
                         step='0.01'
                         min='0'
                         max='100'
-                        required value={FormData.averageScore} onChange={handleChange} className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
+                        required value={formData.averageScore} onChange={handleChange} className='mt-1 block w-full round-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
                     />
                 </div>
 

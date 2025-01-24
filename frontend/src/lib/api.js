@@ -67,14 +67,4 @@ export const departments = [
   'law'
 ];
 
-
-
-
-
-
-
-
-
-
-
 export default api
