@@ -1,6 +1,6 @@
 import React from 'react'
 
-function StatCard() {
+function StatCard({icon: Icon, title, value, subtitle}) {
     return (
         <div className='bg-white rounded-lg shadow-md'>
             <div className='flex items-center justify-center mb-4'>

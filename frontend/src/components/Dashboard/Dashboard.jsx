@@ -1,27 +1,29 @@
-import React from 'react'
-import StatCard from './StatCard'
-import DepartmentComparison from './DepartmentComparison'
+import React, { useState, useEffect } from 'react';
+import StatCard from './StatCard';
+import DepartmentComparison from './DepartmentComparison';
+
 import { School, Trophy, Users } from 'lucide-react'
-
-
+import { getDepartmentStats } from '../../lib/api';
 
 function Dashboard({ stats }) {
   const [departmentStats, setDepartmentStats] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const fetchAllDepartmentStats = async () => {
+    setLoading(true);
+    try {
+      const promise = departments.map(dept => getDepartmentStats(dept));
+      const results = await Promise.all(promise);
+      setDepartmentStats(results);
+    } catch (error) {
+      toast.error('Failed to fetch department stats');
+    }
+    setLoading(false);
+  };
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  useEffect(() => {
+    fetchAllDepartmentStats();
+  }, []);
 
   return (
     <div className='max-w-6xl mx-auto space-y-8'>
@@ -61,10 +63,6 @@ function Dashboard({ stats }) {
         ) : (
           <DepartmentComparison departmentStats={departmentStats} />
         )}
-
-
-
-        
       </div>
     </div>
   )

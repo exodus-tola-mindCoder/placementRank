@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
-const { updateDepartment } = require('../../lib/api')
+import { updateDepartment } from '../../lib/api';
 import toast from 'react-hot-toast'
 
 
