@@ -8,7 +8,7 @@ import Navbar from './components/Layout/Navbar';
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({});
 
@@ -47,12 +47,12 @@ function App() {
         {!user ? (
           isLogin ? (
             <LoginForm
-              onToggleAuth={() => setIsLogin(false)}
+              onToggleAuth={() => setIsLogin(true)}
               onLoginSuccess={handleAuthSuccess}
             />
           ) : (
             <RegisterForm
-              onToggleAuth={() => setIsLogin(true)}
+              onToggleAuth={() => setIsLogin(false)}
               onRegisterSuccess={handleAuthSuccess}
             />
           )
