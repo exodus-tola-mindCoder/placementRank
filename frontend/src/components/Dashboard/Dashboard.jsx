@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StatCard from './StatCard';
 import DepartmentComparison from './DepartmentComparison';
+import toast from 'react-hot-toast';
 
 import { School, Trophy, Users } from 'lucide-react'
 import { getDepartmentStats } from '../../lib/api';
@@ -26,7 +27,7 @@ function Dashboard({ stats }) {
   }, []);
 
   return (
-    <div className='max-w-6xl mx-auto space-y-8'>
+    <div className='max-w-6xl mx-auto space-y-8 '>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         <StatCard icon={Users}
           title="Total Students"

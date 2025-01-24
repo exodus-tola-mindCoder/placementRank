@@ -29,28 +29,28 @@ function DepartmentComparison({ departmentStats }) {
     return (
         <div className='overflow-x-auto'>
             <table className='min-w-full divide-y divide-gray-200'>
-                <thread>
+                <thead>
                     <tr>
-                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-base text-gray-500 uppercase tracking-wider'>
+                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                             Department
                         </th>
-                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-base text-gray-500 uppercase tracking-wider'>
+                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                             Your Rank
                         </th>
-                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-base text-gray-500 uppercase tracking-wider'>
+                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                             Total Students
                         </th>
-                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-base text-gray-500 uppercase tracking-wider'>
+                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                             Capacity
                         </th>
-                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-base text-gray-500 uppercase tracking-wider'>
+                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                             probablility
                         </th>
-                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-base text-gray-500 uppercase tracking-wider'>
+                        <th className='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                             Action
                         </th>
                     </tr>
-                </thread>
+                </thead>
                 <tbody className='bg-white divide-y divide-gray-200'>
                     {departmentStats.map((stat, index) => (
                         <tr key={index} className='hover:bg-gray-50'>
@@ -72,7 +72,7 @@ function DepartmentComparison({ departmentStats }) {
                                 </span>
                             </td>
                             <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                                <button onClick={() => handleUpdateDepartment(stat.department)} disabled={updating} className='inline-flex items-center px-3 py-1 border border-transparent text-sm font-base rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50'
+                                <button onClick={() => handleUpdateDepartment(stat.department)} disabled={updating} className='inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50'
                                 >
                                     {updating ? (
                                         <>
