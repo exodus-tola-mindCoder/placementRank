@@ -8,9 +8,9 @@ import Navbar from './components/Layout/Navbar';
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -47,7 +47,7 @@ function App() {
         {!user ? (
           isLogin ? (
             <LoginForm
-              onToggleAuth={() => setIsLogin(true)}
+              onToggleAuth={() => setIsLogin(false)}
               onLoginSuccess={handleAuthSuccess}
             />
           ) : (
