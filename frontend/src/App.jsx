@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import { getStats } from './lib/api';
 import RegisterForm from './components/Auth/RegisterForm';
 import LoginForm from './components/Auth/LoginForm';
 import Dashboard from './components/Dashboard/Dashboard';
-
 import Navbar from './components/Layout/Navbar';
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({});
 
@@ -21,17 +22,23 @@ function App() {
     }
   }, []);
 
-  const handleLogout = () => {
-    // logic here
-  };
-
   const fetchStats = async () => {
     try {
-      // logic here
+      const data = await getStats();
+      setStats(data);
+      console.log(data)
     } catch (error) {
-
+      toast.error('failed to fetch statics')
     }
-  }
+  };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    setStats({});
+    toast.success('successfully logged out!');
+  };
+
 
   const handleAuthSuccess = (userData) => {
     setUser(userData);
@@ -47,12 +54,12 @@ function App() {
         {!user ? (
           isLogin ? (
             <LoginForm
-              onToggleAuth={() => setIsLogin(true)}
+              onToggleAuth={() => setIsLogin(false)}
               onLoginSuccess={handleAuthSuccess}
             />
           ) : (
             <RegisterForm
-              onToggleAuth={() => setIsLogin(false)}
+              onToggleAuth={() => setIsLogin(true)}
               onRegisterSuccess={handleAuthSuccess}
             />
           )

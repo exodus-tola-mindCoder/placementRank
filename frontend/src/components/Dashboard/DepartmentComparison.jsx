@@ -1,11 +1,24 @@
 import React, { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { updateDepartment } from '../../lib/api';
+import { updateDepartment, getDepartmentStats } from '../../lib/api';
 import toast from 'react-hot-toast'
 
 
 function DepartmentComparison({ departmentStats }) {
     const [updating, setUpdating] = useState(false);
+
+    const fetchDepartmentStats = async (department) => {
+        try {
+            const data = await getDepartmentStats(department);
+            return data;
+        } catch (error) {
+            toast.error('Failed to fetch department stats');
+        }
+    };
+
+    useEffect(() => { 
+        fetchDepartmentStats();
+    }, []);
 
     const handleUpdateDepartment = async (department) => {
         setUpdating(true);
