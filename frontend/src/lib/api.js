@@ -49,10 +49,10 @@ export const getStats = async () => {
 
 export const getDepartmentStats = async (department) => {
   try {
-    const response = await api.get(`/stats/${department}`);
+    const response = await api.get(`/stats/department/${encodeURIComponent(department)}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching department stats:', error);
+    console.error(`Error fetching department stats ${department}:`, error);
     
   }
 };
