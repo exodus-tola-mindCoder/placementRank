@@ -15,7 +15,9 @@ function Dashboard({ stats }) {
     try {
       const promise = departments.map(dept => getDepartmentStats(dept));
       const results = await Promise.all(promise);
-      setDepartmentStats(results);
+      const validResults = results.filter(result => result !== null);
+      setDepartmentStats(validResults);
+      console.log(results);
     } catch (error) {
       toast.error('Failed to fetch department stats');
     } finally {
