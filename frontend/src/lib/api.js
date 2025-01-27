@@ -39,18 +39,31 @@ export const login = async (studentId, email, password) => {
 };
 
 export const getStats = async () => {
-  const response = await api.get('/stats');
-  return response.data;
+  try {
+    const response = await api.get('/stats');
+    return response.data;
+  } catch (error) {
+    co
+  }
 };
 
 export const getDepartmentStats = async (department) => {
-  const response = await api.get(`/stats/department/${department}`);
-  return response.data;
+  try {
+    const response = await api.get(`/stats/${department}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching department stats:', error);
+    
+  }
 };
 
 export const updateDepartment = async (department, data) => {
-  const response = await api.put('/update-department', { department, data });
-  return response.data;
+  try {
+    const response = await api.put(`/update-department`, { department, ...data });
+    return response.data;
+  } catch (error) {
+    console,error('Error updating department:', error);
+  }
 };
 
 export const departments = [

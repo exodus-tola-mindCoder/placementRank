@@ -4,22 +4,23 @@ import DepartmentComparison from './DepartmentComparison';
 import toast from 'react-hot-toast';
 
 import { School, Trophy, Users } from 'lucide-react'
-import { getDepartmentStats } from '../../lib/api';
+import { getDepartmentStats, departments } from '../../lib/api';
 
 function Dashboard({ stats }) {
   const [departmentStats, setDepartmentStats] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchAllDepartmentStats = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
       const promise = departments.map(dept => getDepartmentStats(dept));
       const results = await Promise.all(promise);
       setDepartmentStats(results);
     } catch (error) {
       toast.error('Failed to fetch department stats');
+    } finally {
+      setLoading(false)
     }
-    setLoading(false);
   };
 
   useEffect(() => {

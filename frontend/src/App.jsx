@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
 import { getStats } from './lib/api';
@@ -17,8 +17,13 @@ function App() {
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
     if (token && userData) {
-      setUser(JSON.parse(userData));
-      fetchStats();
+     try {
+       setUser(JSON.parse(userData));
+       fetchStats();
+     } catch (error) {
+       console.log('error', error.message);
+      
+     }
     }
   }, []);
 
