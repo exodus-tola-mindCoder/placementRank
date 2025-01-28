@@ -11,13 +11,17 @@ import statsRoutes from './routes/stats.router.js';
 dotenv.config();
 // console.log(`MONGO_URI: ${process.env.MONGO_URI}`);
 
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true
+}
 // connect to database
 connectDB();
 
 const app = express();
 
 // middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 

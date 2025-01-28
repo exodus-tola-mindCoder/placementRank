@@ -7,10 +7,12 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
+  console.log('Token:', token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
     console.log('Token added to headers:', config.headers.Authorization); // Debugging log
@@ -49,11 +51,18 @@ export const getStats = async () => {
 
 export const getDepartmentStats = async (department) => {
   try {
-    const response = await api.get(`/stats/department/${encodeURIComponent(department)}`);
+    const response = await api.get(`/stats/department/${department}`);
+    console.log(`Fetched department stats for ${department}:`, response.data);
     return response.data;
   } catch (error) {
     console.error(`Error fetching department stats ${department}:`, error);
-    
+    if (error.response) {
+      console.error('Response data:', error.response.data); // Debugging response data
+      console.error('Response status:', error.response.status); // Debugging response status
+      console.error('Response headers:', error.response.headers); // Debugging response headers
+    }
+    return null;
+
   }
 };
 
@@ -62,7 +71,7 @@ export const updateDepartment = async (department, data) => {
     const response = await api.put(`/update-department`, { department, ...data });
     return response.data;
   } catch (error) {
-    console,error('Error updating department:', error);
+    console, error('Error updating department:', error);
   }
 };
 

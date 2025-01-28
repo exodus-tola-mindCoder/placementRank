@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
-// import { departments } from '../../lib/api';
+import { departments } from '../../lib/api';
 import { ArrowRight } from 'lucide-react';
 import { updateDepartment } from '../../lib/api';
 

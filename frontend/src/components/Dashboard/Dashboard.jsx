@@ -17,7 +17,7 @@ function Dashboard({ stats }) {
       const results = await Promise.all(promise);
       const validResults = results.filter(result => result !== null);
       setDepartmentStats(validResults);
-      console.log(results);
+      console.log('Valid results:', validResults);
     } catch (error) {
       toast.error('Failed to fetch department stats');
     } finally {
