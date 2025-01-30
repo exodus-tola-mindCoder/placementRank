@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { School, Trophy, Users } from 'lucide-react';
 import StatCard from './StatCard';
 import DepartmentComparison from './DepartmentComparison';
 import toast from 'react-hot-toast';
 
-import { School, Trophy, Users } from 'lucide-react'
 import { getDepartmentStats, departments } from '../../lib/api';
 
 function Dashboard({ stats }) {
@@ -15,14 +15,11 @@ function Dashboard({ stats }) {
     try {
       const promise = departments.map(dept => getDepartmentStats(dept));
       const results = await Promise.all(promise);
-      const validResults = results.filter(result => result !== null);
-      setDepartmentStats(validResults);
-      console.log('Valid results:', validResults);
+      setDepartmentStats(results);
     } catch (error) {
       toast.error('Failed to fetch department stats');
-    } finally {
-      setLoading(false)
     }
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -34,7 +31,7 @@ function Dashboard({ stats }) {
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         <StatCard icon={Users}
           title="Total Students"
-          value={stats.totalInDepartment}
+          value={stats.totalInDepartment || 0}
           subtitle="in your department"
         />
         <StatCard

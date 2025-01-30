@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5001/api';
+const API_URL = '/api'; // Use proxy path
 
 const api = axios.create({
   baseURL: API_URL,
@@ -12,31 +12,21 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  console.log('Token:', token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-    console.log('Token added to headers:', config.headers.Authorization); // Debugging log
-  } else {
-    console.log('No token found in localStorage'); // Debugging log
   }
   return config;
-}, (error) => {
-  return Promise.reject(error);
 });
 
-export const register = async (studentData) => {
-  const response = await api.post('/auth/register', studentData);
-  const { token, student } = response.data;
-  localStorage.setItem('token', token);
-  localStorage.setItem('user', JSON.stringify(student));
+
+
+export const login = async (email, password) => {
+  const response = await api.post('/login', { email, password });
   return response.data;
 };
 
-export const login = async (studentId, email, password) => {
-  const response = await api.post('/auth/login', { studentId, email, password });
-  const { token, student } = response.data;
-  localStorage.setItem('token', token);
-  localStorage.setItem('user', JSON.stringify(student));
+export const register = async (studentData) => {
+  const response = await api.post('/register', studentData);
   return response.data;
 };
 
@@ -45,33 +35,28 @@ export const getStats = async () => {
     const response = await api.get('/stats');
     return response.data;
   } catch (error) {
-    co
+    console.error('Error fetching stats:', error);
+    return null;
   }
 };
 
 export const getDepartmentStats = async (department) => {
   try {
     const response = await api.get(`/stats/department/${department}`);
-    console.log(`Fetched department stats for ${department}:`, response.data);
     return response.data;
   } catch (error) {
     console.error(`Error fetching department stats ${department}:`, error);
-    if (error.response) {
-      console.error('Response data:', error.response.data); // Debugging response data
-      console.error('Response status:', error.response.status); // Debugging response status
-      console.error('Response headers:', error.response.headers); // Debugging response headers
-    }
     return null;
-
   }
 };
 
-export const updateDepartment = async (department, data) => {
+export const updateDepartment = async (department) => {
   try {
-    const response = await api.put(`/update-department`, { department, ...data });
+    const response = await api.put('/update-department', { department });
     return response.data;
   } catch (error) {
-    console, error('Error updating department:', error);
+    console.error('Error updating department:', error);
+    return null;
   }
 };
 
@@ -85,14 +70,5 @@ export const departments = [
   'Civil Engineering',
   'Chemical Engineering',
   'Medicine',
-  'Pharmacy',
-  'Nursing',
-  'Information Science',
-  'Doctor of Veterinary Medicine',
-  'Medical Laboratory Science',
-  'Public Health',
-  'Midwifery',
-  'Law',
+  'Bioengineering',
 ];
-
-export default api;
