@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api'; // Use proxy path
+const API_URL = 'http://localhost:5001/api'; // Use proxy path
 
 const api = axios.create({
   baseURL: API_URL,
@@ -26,7 +26,7 @@ export const login = async (email, password) => {
 };
 
 export const register = async (studentData) => {
-  const response = await api.post('/register', studentData);
+  const response = await api.post('/auth/register', studentData);
   return response.data;
 };
 
