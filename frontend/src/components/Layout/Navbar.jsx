@@ -6,7 +6,7 @@ function Navbar({user, onLogout}) {
       <div className='container mx-auto flex justify-between items-center'>
         <div className='flex items-center space-x-2'>
           <img src="/logo.jpeg" alt="Logo" className="h-10 w-10" />
-          <span className='text-xl font-bold'>Haramaya Univversity Freshman Placement System</span>
+          <span className='text-xl font-bold'>Haramaya University Freshman Placement System</span>
         </div>
         {user && (
           <button
