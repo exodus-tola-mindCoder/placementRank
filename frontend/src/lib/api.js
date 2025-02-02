@@ -70,5 +70,12 @@ export const departments = [
   'Civil Engineering',
   'Chemical Engineering',
   'Medicine',
-  'Bioengineering',
+  'Pharmacy',
+  'Nursing',
+  'Information Science',
+  'Doctor of Veterinary Medicine',
+  'Medical Laboratory Science',
+  'Public Health',
+  'Midwifery',
+  'Law'
 ];
