@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { departments } from '../../lib/api';
 import { ArrowRight } from 'lucide-react';
@@ -6,6 +6,10 @@ import { updateDepartment } from '../../lib/api';
 
 function DepartmentComparison({ departmentStats }) {
     const [updating, setUpdating] = useState(false);
+
+    useEffect(() => {
+        console.log('Department Stats:', departmentStats); // Debugging log
+    }, [departmentStats]);
 
     const handleUpdateDepartment = async (department) => {
         setUpdating(true);
@@ -20,6 +24,7 @@ function DepartmentComparison({ departmentStats }) {
     };
 
     const getProbabilityColor = (probability) => {
+        console.log('Probability:', probability); // Debugging log
         switch (probability) {
             case 'High': return 'text-green-600';
             case 'Medium': return 'text-yellow-600';
@@ -27,6 +32,7 @@ function DepartmentComparison({ departmentStats }) {
             default: return 'text-gray-600';
         }
     };
+
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -65,11 +71,11 @@ function DepartmentComparison({ departmentStats }) {
                                 {stat.totalInDepartment}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {stat.capacity}
+                                {stat.departmentCapacity !== undefined ? stat.departmentCapacity : 'N/A'}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm">
-                                <span className={`font-medium ${getProbabilityColor(stat.probability)}`}>
-                                    {stat.probability}
+                                <span className={`font-medium ${getProbabilityColor(stat.probablity)}`}>
+                                    {stat.probablity !== undefined ? stat.probablity : 'N/A'}
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

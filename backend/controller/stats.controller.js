@@ -29,17 +29,17 @@ export const getDepartmentStats = async (req, res) => {
         const student = req.student;
         const { department } = req.params;
 
-        // First, we get the total number of students in the same department:
+        // First, I get the total number of students in the same department:
 
         const totalInDepartment = await Student.countDocuments({ department });
 
-        // Next, we count how many students have higher scores than the current student in their department:
+        // Next, I count how many students have higher scores than the current student in their department:
 
         const higherScores = await Student.countDocuments({
             department, averageScore: { $gt: student.averageScore }
         });
 
-        // Finally, we calculate the rank by adding 1 to the number of students with higher scores:
+        // Finally, I calculate the rank by adding 1 to the number of students with higher scores:
         const rank = higherScores + 1;
 
         // Get department capacity
@@ -48,25 +48,31 @@ export const getDepartmentStats = async (req, res) => {
             'Software Engineering': 100,
             'Computer Science': 100,
             'Information Technology': 100,
-            'Information Systems': 100,
+            'Information Systems': 0,
             'Electrical Engineering': 100,
             'Mechanical Engineering': 60,
             'Civil Engineering': 120,
             'Chemical Engineering': 80,
             'Medicine': 150,
-            'pharmacy': 100,
+            'Pharmacy': 100,
             'Nursing': 100,
             'Information Science': 100,
-            'Doctor of Veternary Medicine': 50,
+            'Doctor Of Veterinary Medicine': 50,
             'Medical Laboratory Science': 100,
             'Public Health': 100,
-            'midwifery': 100,
-            'law': 100,
+            'Midwifery': 100,
+            'Law': 100,
         };
 
+        // Normalize department name to match the keys in departmentCapacities
+        const normalizedDepartment = department.trim().toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+
+        // Handle special case for "Doctor of Veterinary Medicine"
+        const finalDepartment = normalizedDepartment === "Doctor Of Veternary Medicine" ? "Doctor Of Veterinary Medicine" : normalizedDepartment;
+
         // Get the number of students in the department
-        const departmentCapacity = departmentCapacities[department];
-        // probablity of admission
+        const departmentCapacity = departmentCapacities[finalDepartment];
+        // Probability of admission
 
         const probablity = rank <= departmentCapacity ? "High" : rank <= departmentCapacity * 2 ? "Medium" : "Low";
 
@@ -83,7 +89,6 @@ export const getDepartmentStats = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
-
 
 export const updateDepartment = async (req, res) => {
     try {
