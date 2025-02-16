@@ -72,6 +72,32 @@ function App() {
           <Dashboard stats={stats} />
         )}
       </main>
+      {/* create a beatifull footer that that tells the project creator */}
+      <footer className="bg-gray-800 text-gray-100 py-4">
+        <div className="container mx-auto text-center">
+          <p>
+            Made with ❤️ by{' '}
+            <a
+              href="
+              https://t.me/Exodus_Tola"
+              target="_blank"
+              rel="noreferrer"
+              className="font-bold hover:underline"
+            >
+              Exodus_Tola
+            </a> {' '}
+            Join the community on{' '}
+            <a
+              href="https://t.me/Exodus_Tola"
+              target="_blank"
+              rel="noreferrer"
+              className="font-bold hover:underline"
+            >
+              Telegram
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
